@@ -42,6 +42,17 @@ public class GameOfLifeTest {
 
         assertEquals(Cell.dead(), nextGenerationCell);
     }
+
+    @Test
+    public void a_dead_cell_with_exactly_three_live_neighbours_becomes_a_live_cell() {
+        List<Cell> neighbors = asList(
+                Cell.alive(), Cell.alive(), Cell.alive(),
+                Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead()
+        );
+        Cell nextGenerationCell = Cell.dead().nextGeneration(neighbors);
+
+        assertEquals(Cell.alive(), nextGenerationCell);
+    }
 }
 
 class Cell {
@@ -60,6 +71,16 @@ class Cell {
     }
 
     public Cell nextGeneration(List<Cell> neighbors) {
+        Integer liveCells = 0;
+        for (Cell cell : neighbors) {
+            if (cell.state) {
+                liveCells++;
+            }
+        }
+        if (liveCells == 3) {
+            return Cell.alive();
+        }
+
         return Cell.dead();
     }
 
