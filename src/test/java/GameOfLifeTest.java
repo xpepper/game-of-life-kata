@@ -23,7 +23,7 @@ import static org.junit.Assert.assertEquals;
 public class GameOfLifeTest {
 
     @Test
-    public void when_all_neighbors_are_dead_the_dead_cell_will_die() {
+    public void a_dead_cell_with_all_dead_neighbors_stays_dead() {
         List<Cell> neighbors = asList(
                 Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(),
                 Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead()
@@ -34,12 +34,12 @@ public class GameOfLifeTest {
     }
 
     @Test
-    public void when_all_neighbors_are_dead_the_alive_cell_will_die() {
+    public void a_live_cell_with_all_dead_neighbors_dies() {
         List<Cell> neighbors = asList(
                 Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(),
                 Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead()
         );
-        Cell nextGenerationCell = Cell.alive().nextGeneration(neighbors);
+        Cell nextGenerationCell = Cell.live().nextGeneration(neighbors);
 
         assertEquals(Cell.dead(), nextGenerationCell);
     }
@@ -47,12 +47,12 @@ public class GameOfLifeTest {
     @Test
     public void a_dead_cell_with_exactly_three_live_neighbours_becomes_a_live_cell() {
         List<Cell> neighbors = asList(
-                Cell.alive(), Cell.alive(), Cell.alive(),
+                Cell.live(), Cell.live(), Cell.live(),
                 Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead()
         );
         Cell nextGenerationCell = Cell.dead().nextGeneration(neighbors);
 
-        assertEquals(Cell.alive(), nextGenerationCell);
+        assertEquals(Cell.live(), nextGenerationCell);
     }
 }
 
@@ -67,13 +67,13 @@ class Cell {
         return new Cell(false);
     }
 
-    public static Cell alive() {
+    public static Cell live() {
         return new Cell(true);
     }
 
     public Cell nextGeneration(List<Cell> neighbors) {
         if (liveCellsIn(neighbors) == 3) {
-            return Cell.alive();
+            return Cell.live();
         }
 
         return Cell.dead();
@@ -81,6 +81,10 @@ class Cell {
 
     private Integer liveCellsIn(List<Cell> neighbors) {
         return toIntExact(neighbors.stream().filter(Cell::isAlive).count());
+    }
+
+    private boolean isAlive() {
+        return state;
     }
 
     @Override
@@ -94,9 +98,5 @@ class Cell {
     @Override
     public int hashCode() {
         return Objects.hash(state);
-    }
-
-    private boolean isAlive() {
-        return state;
     }
 }
