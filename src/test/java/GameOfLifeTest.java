@@ -31,6 +31,17 @@ public class GameOfLifeTest {
 
         assertEquals(Cell.dead(), nextGenerationCell);
     }
+
+    @Test
+    public void when_all_neighbors_are_dead_the_alive_cell_will_die() {
+        List<Cell> neighbors = asList(
+                Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(),
+                Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead()
+        );
+        Cell nextGenerationCell = Cell.alive().nextGeneration(neighbors);
+
+        assertEquals(Cell.dead(), nextGenerationCell);
+    }
 }
 
 class Cell {
@@ -42,6 +53,10 @@ class Cell {
 
     public static Cell dead() {
         return new Cell(false);
+    }
+
+    public static Cell alive() {
+        return new Cell(true);
     }
 
     public Cell nextGeneration(List<Cell> neighbors) {
