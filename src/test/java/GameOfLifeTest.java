@@ -3,6 +3,7 @@ import org.junit.Test;
 import java.util.List;
 import java.util.Objects;
 
+import static java.lang.Math.toIntExact;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 
@@ -71,17 +72,15 @@ class Cell {
     }
 
     public Cell nextGeneration(List<Cell> neighbors) {
-        Integer liveCells = 0;
-        for (Cell cell : neighbors) {
-            if (cell.state) {
-                liveCells++;
-            }
-        }
-        if (liveCells == 3) {
+        if (liveCellsIn(neighbors) == 3) {
             return Cell.alive();
         }
 
         return Cell.dead();
+    }
+
+    private Integer liveCellsIn(List<Cell> neighbors) {
+        return toIntExact(neighbors.stream().filter(Cell::isAlive).count());
     }
 
     @Override
@@ -95,5 +94,9 @@ class Cell {
     @Override
     public int hashCode() {
         return Objects.hash(state);
+    }
+
+    private boolean isAlive() {
+        return state;
     }
 }
