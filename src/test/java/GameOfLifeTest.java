@@ -9,9 +9,10 @@ import static org.junit.Assert.assertEquals;
 
 /*
     RULES:
-    * Any live cell with two or three neighbors survives.
-    * Any dead cell with three live neighbors becomes a live cell.
-    * All other live cells die in the next generation. Similarly, all other dead cells stay dead.
+    * Any live cell with fewer than two live neighbours dies, as if by underpopulation. [DONE]
+    * Any live cell with two or three live neighbours lives on to the next generation. [DONE]
+    * Any live cell with more than three live neighbours dies, as if by overpopulation. [DONE]
+    * Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction [DONE]
 
     - griglia infinita
     - evoluzione nello stesso momento
@@ -39,17 +40,6 @@ public class GameOfLifeTest {
     }
 
     @Test
-    public void a_live_cell_with_all_dead_neighbors_dies() {
-        List<Cell> neighbors = asList(
-                Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(),
-                Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead()
-        );
-        Cell nextGenerationCell = Cell.live().nextGeneration(neighbors);
-
-        assertEquals(Cell.dead(), nextGenerationCell);
-    }
-
-    @Test
     public void a_dead_cell_with_three_live_neighbours_becomes_a_live_cell() {
         List<Cell> neighbors = asList(
                 Cell.live(), Cell.live(), Cell.live(),
@@ -61,10 +51,54 @@ public class GameOfLifeTest {
     }
 
     @Test
+    public void a_dead_cell_with_two_live_neighbours_remains_dead() {
+        List<Cell> neighbors = asList(
+                Cell.live(), Cell.live(),
+                Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead()
+        );
+        Cell nextGenerationCell = Cell.dead().nextGeneration(neighbors);
+
+        assertEquals(Cell.dead(), nextGenerationCell);
+    }
+
+    @Test
+    public void a_live_cell_with_all_dead_neighbors_dies() {
+        List<Cell> neighbors = asList(
+                Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(),
+                Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead()
+        );
+        Cell nextGenerationCell = Cell.live().nextGeneration(neighbors);
+
+        assertEquals(Cell.dead(), nextGenerationCell);
+    }
+
+    @Test
+    public void a_live_cell_with_fewer_than_two_live_neighbors_dies() {
+        List<Cell> neighbors = asList(
+                Cell.live(),
+                Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead()
+        );
+        Cell nextGenerationCell = Cell.live().nextGeneration(neighbors);
+
+        assertEquals(Cell.dead(), nextGenerationCell);
+    }
+
+    @Test
+    public void a_live_cell_with_more_than_three_live_neighbors_dies() {
+        List<Cell> neighbors = asList(
+                Cell.live(), Cell.live(), Cell.live(), Cell.live(),
+                Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead()
+        );
+        Cell nextGenerationCell = Cell.live().nextGeneration(neighbors);
+
+        assertEquals(Cell.dead(), nextGenerationCell);
+    }
+
+    @Test
     public void a_live_cell_with_two_live_neighbours_remains_alive() {
         List<Cell> neighbors = asList(
-                Cell.live(), Cell.live(), Cell.dead(),
-                Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead()
+                Cell.live(), Cell.live(),
+                Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead()
         );
         Cell nextGenerationCell = Cell.live().nextGeneration(neighbors);
 
@@ -72,14 +106,14 @@ public class GameOfLifeTest {
     }
 
     @Test
-    public void a_dead_cell_with_two_live_neighbours_remains_dead() {
+    public void a_live_cell_with_three_live_neighbours_remains_alive() {
         List<Cell> neighbors = asList(
-                Cell.live(), Cell.live(), Cell.dead(),
+                Cell.live(), Cell.live(), Cell.live(),
                 Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead()
         );
-        Cell nextGenerationCell = Cell.dead().nextGeneration(neighbors);
+        Cell nextGenerationCell = Cell.live().nextGeneration(neighbors);
 
-        assertEquals(Cell.dead(), nextGenerationCell);
+        assertEquals(Cell.live(), nextGenerationCell);
     }
 }
 
@@ -100,7 +134,7 @@ class Cell {
 
     public Cell nextGeneration(List<Cell> neighbors) {
         if (liveCellsIn(neighbors) == 2) {
-            return isAlive()? Cell.live() : Cell.dead();
+            return isAlive() ? Cell.live() : Cell.dead();
         }
         if (liveCellsIn(neighbors) == 3) {
             return Cell.live();
