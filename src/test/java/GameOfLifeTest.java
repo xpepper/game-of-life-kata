@@ -14,6 +14,15 @@ import static org.junit.Assert.assertEquals;
     * Any live cell with more than three live neighbours dies, as if by overpopulation. [DONE]
     * Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction [DONE]
 
+    TODO:
+
+    * non usare il booleano per descrivere lo stato cella
+    * toString su `Cell`
+    * introdurre un builder per creare i neighbors in modo "comodo"
+        * tipo `n.withAlive(3).andDead(5).build()`
+    * neighbors potrebbe diventare un oggetto?
+    * `liveCellsIn()` potrebbe essere un suo metodo...
+
     - griglia infinita
     - evoluzione nello stesso momento
     - qual'è il primo test?
