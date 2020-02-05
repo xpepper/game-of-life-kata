@@ -8,6 +8,11 @@ import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 
 /*
+    RULES:
+    * Any live cell with two or three neighbors survives.
+    * Any dead cell with three live neighbors becomes a live cell.
+    * All other live cells die in the next generation. Similarly, all other dead cells stay dead.
+
     - griglia infinita
     - evoluzione nello stesso momento
     - qual'è il primo test?
@@ -45,12 +50,23 @@ public class GameOfLifeTest {
     }
 
     @Test
-    public void a_dead_cell_with_exactly_three_live_neighbours_becomes_a_live_cell() {
+    public void a_dead_cell_with_three_live_neighbours_becomes_a_live_cell() {
         List<Cell> neighbors = asList(
                 Cell.live(), Cell.live(), Cell.live(),
                 Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead()
         );
         Cell nextGenerationCell = Cell.dead().nextGeneration(neighbors);
+
+        assertEquals(Cell.live(), nextGenerationCell);
+    }
+
+    @Test
+    public void a_live_cell_with_two_live_neighbours_remains_alive() {
+        List<Cell> neighbors = asList(
+                Cell.live(), Cell.live(), Cell.dead(),
+                Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead()
+        );
+        Cell nextGenerationCell = Cell.live().nextGeneration(neighbors);
 
         assertEquals(Cell.live(), nextGenerationCell);
     }
@@ -72,11 +88,19 @@ class Cell {
     }
 
     public Cell nextGeneration(List<Cell> neighbors) {
+        if (liveCellsIn(neighbors) == 2) {
+            return Cell.live();
+        }
         if (liveCellsIn(neighbors) == 3) {
             return Cell.live();
         }
 
         return Cell.dead();
+    }
+
+    @Override
+    public String toString() {
+        return "Cell{state=" + state + '}';
     }
 
     private Integer liveCellsIn(List<Cell> neighbors) {
