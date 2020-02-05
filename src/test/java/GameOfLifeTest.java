@@ -17,7 +17,6 @@ import static org.junit.Assert.assertEquals;
     TODO:
 
     * non usare il booleano per descrivere lo stato cella
-    * toString su `Cell`
     * introdurre un builder per creare i neighbors in modo "comodo"
         * tipo `n.withAlive(3).andDead(5).build()`
     * neighbors potrebbe diventare un oggetto?
@@ -142,14 +141,27 @@ class Cell {
     }
 
     public Cell nextGeneration(List<Cell> neighbors) {
-        if (liveCellsIn(neighbors) == 2) {
-            return isAlive() ? Cell.live() : Cell.dead();
+        if (isAlive()) {
+            if (isStableNeighborhood(neighbors)) {
+                return Cell.live();
+            } else {
+                return Cell.dead();
+            }
+        } else {
+            if (isFertileNeighborhood(neighbors)) {
+                return Cell.live();
+            } else {
+                return Cell.dead();
+            }
         }
-        if (liveCellsIn(neighbors) == 3) {
-            return Cell.live();
-        }
+    }
 
-        return Cell.dead();
+    private boolean isFertileNeighborhood(List<Cell> neighbors) {
+        return liveCellsIn(neighbors) == 3;
+    }
+
+    private boolean isStableNeighborhood(List<Cell> neighbors) {
+        return liveCellsIn(neighbors) == 2 || liveCellsIn(neighbors) == 3;
     }
 
     @Override
