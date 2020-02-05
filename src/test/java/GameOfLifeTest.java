@@ -14,11 +14,14 @@ import static org.junit.Assert.assertEquals;
 
     TODO:
 
-    * non usare il booleano per descrivere lo stato cella
+    * verificare come questo modello di cella si aggancia ad un mondo fatto di tante celle a griglia
+    * potremmo togliere isAlive dentro il metodo liveCellsIn?
+    * provare a spostare DeadCell e LiveCell in un package "interno" (rendendo non public le due classi)
+        e verificare se tutto compila ancora
+    * neighbors potrebbe diventare un oggetto?
+        * `liveCellsIn()` potrebbe essere un suo metodo...
     * introdurre un builder per creare i neighbors in modo "comodo"
         * tipo `n.withAlive(3).andDead(5).build()`
-    * neighbors potrebbe diventare un oggetto?
-    * `liveCellsIn()` potrebbe essere un suo metodo...
 
     - griglia infinita
     - evoluzione nello stesso momento

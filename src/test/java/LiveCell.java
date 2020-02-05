@@ -5,12 +5,8 @@ import static java.lang.Math.toIntExact;
 public class LiveCell extends Cell {
 
     @Override
-    public Cell nextGeneration(List<Cell> neighbors) {
-        if (isStableNeighborhood(neighbors)) {
-            return Cell.live();
-        } else {
-            return Cell.dead();
-        }
+    protected boolean isAliveInTheNextGeneration(List<Cell> neighbors) {
+        return isStableNeighborhood(neighbors);
     }
 
     @Override

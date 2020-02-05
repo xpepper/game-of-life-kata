@@ -5,12 +5,8 @@ import static java.lang.Math.toIntExact;
 public class DeadCell extends Cell {
 
     @Override
-    public Cell nextGeneration(List<Cell> neighbors) {
-        if (isFertileNeighborhood(neighbors)) {
-            return Cell.live();
-        } else {
-            return Cell.dead();
-        }
+    protected boolean isAliveInTheNextGeneration(List<Cell> neighbors) {
+        return isFertileNeighborhood(neighbors);
     }
 
     @Override
