@@ -1,9 +1,7 @@
 import org.junit.Test;
 
 import java.util.List;
-import java.util.Objects;
 
-import static java.lang.Math.toIntExact;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 
@@ -122,71 +120,5 @@ public class GameOfLifeTest {
         Cell nextGenerationCell = Cell.live().nextGeneration(neighbors);
 
         assertEquals(Cell.live(), nextGenerationCell);
-    }
-}
-
-class Cell {
-    private boolean state;
-
-    private Cell(boolean state) {
-        this.state = state;
-    }
-
-    public static Cell dead() {
-        return new Cell(false);
-    }
-
-    public static Cell live() {
-        return new Cell(true);
-    }
-
-    public Cell nextGeneration(List<Cell> neighbors) {
-        if (isAlive()) {
-            if (isStableNeighborhood(neighbors)) {
-                return Cell.live();
-            } else {
-                return Cell.dead();
-            }
-        } else {
-            if (isFertileNeighborhood(neighbors)) {
-                return Cell.live();
-            } else {
-                return Cell.dead();
-            }
-        }
-    }
-
-    private boolean isFertileNeighborhood(List<Cell> neighbors) {
-        return liveCellsIn(neighbors) == 3;
-    }
-
-    private boolean isStableNeighborhood(List<Cell> neighbors) {
-        return liveCellsIn(neighbors) == 2 || liveCellsIn(neighbors) == 3;
-    }
-
-    @Override
-    public String toString() {
-        return "Cell{state=" + state + '}';
-    }
-
-    private Integer liveCellsIn(List<Cell> neighbors) {
-        return toIntExact(neighbors.stream().filter(Cell::isAlive).count());
-    }
-
-    private boolean isAlive() {
-        return state;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Cell cell = (Cell) o;
-        return state == cell.state;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(state);
     }
 }
