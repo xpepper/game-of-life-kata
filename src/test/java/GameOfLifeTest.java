@@ -28,7 +28,7 @@ import static org.junit.Assert.assertEquals;
 public class GameOfLifeTest {
 
     @Test
-    public void a_dead_cell_with_all_dead_neighbors_stays_dead() {
+    public void a_dead_cell_with_all_dead_neighbors_remains_dead() {
         List<Cell> neighbors = asList(
                 Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(),
                 Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead()
@@ -70,6 +70,17 @@ public class GameOfLifeTest {
 
         assertEquals(Cell.live(), nextGenerationCell);
     }
+
+    @Test
+    public void a_dead_cell_with_two_live_neighbours_remains_dead() {
+        List<Cell> neighbors = asList(
+                Cell.live(), Cell.live(), Cell.dead(),
+                Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead()
+        );
+        Cell nextGenerationCell = Cell.dead().nextGeneration(neighbors);
+
+        assertEquals(Cell.dead(), nextGenerationCell);
+    }
 }
 
 class Cell {
@@ -89,7 +100,7 @@ class Cell {
 
     public Cell nextGeneration(List<Cell> neighbors) {
         if (liveCellsIn(neighbors) == 2) {
-            return Cell.live();
+            return isAlive()? Cell.live() : Cell.dead();
         }
         if (liveCellsIn(neighbors) == 3) {
             return Cell.live();
