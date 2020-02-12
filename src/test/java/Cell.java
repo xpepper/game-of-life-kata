@@ -1,8 +1,3 @@
-import java.util.List;
-import java.util.function.Predicate;
-
-import static java.lang.Math.toIntExact;
-
 abstract class Cell {
 
     public static Cell dead() {
@@ -13,15 +8,15 @@ abstract class Cell {
         return new LiveCell();
     }
 
-    public Cell nextGeneration(List<Cell> neighbors) {
-        if (isAliveInTheNextGeneration(neighbors)) {
+    public Cell nextGeneration(Neighborhood neighborhood) {
+        if (isAliveInTheNextGeneration(neighborhood)) {
             return Cell.live();
         } else {
             return Cell.dead();
         }
     }
 
-    protected abstract boolean isAliveInTheNextGeneration(List<Cell> neighbors);
+    protected abstract boolean isAliveInTheNextGeneration(Neighborhood neighborhood);
 
     @Override
     public boolean equals(Object o) {
@@ -29,11 +24,7 @@ abstract class Cell {
         return getClass() == o.getClass();
     }
 
-    protected Integer liveCellsIn(List<Cell> neighbors) {
-        return toIntExact(neighbors.stream().filter(isAlive()).count());
-    }
-
-    private Predicate<Cell> isAlive() {
-        return cell -> cell instanceof LiveCell;
+    public boolean isAlive() {
+        return this instanceof LiveCell;
     }
 }

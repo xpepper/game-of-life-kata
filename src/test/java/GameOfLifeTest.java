@@ -15,13 +15,12 @@ import static org.junit.Assert.assertEquals;
     TODO:
 
     * verificare come questo modello di cella si aggancia ad un mondo fatto di tante celle a griglia
-    * potremmo togliere isAlive dentro il metodo liveCellsIn?
+    * rendere polimorfico il metodo `nextGeneration` (e' la cella stessa a determinare la cella alla generazione successiva)
     * provare a spostare DeadCell e LiveCell in un package "interno" (rendendo non public le due classi)
         e verificare se tutto compila ancora
-    * neighbors potrebbe diventare un oggetto?
-        * `liveCellsIn()` potrebbe essere un suo metodo...
     * introdurre un builder per creare i neighbors in modo "comodo"
         * tipo `n.withAlive(3).andDead(5).build()`
+        * rafforzare la regola di dominio che ogni cella ha esattamente 8 celle vicine.
 
     - griglia infinita
     - evoluzione nello stesso momento
@@ -43,7 +42,7 @@ public class GameOfLifeTest {
                 Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(),
                 Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead()
         );
-        Cell nextGenerationCell = Cell.dead().nextGeneration(neighbors);
+        Cell nextGenerationCell = Cell.dead().nextGeneration(new Neighborhood(neighbors));
 
         assertEquals(Cell.dead(), nextGenerationCell);
     }
@@ -54,7 +53,7 @@ public class GameOfLifeTest {
                 Cell.live(), Cell.live(), Cell.live(),
                 Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead()
         );
-        Cell nextGenerationCell = Cell.dead().nextGeneration(neighbors);
+        Cell nextGenerationCell = Cell.dead().nextGeneration(new Neighborhood(neighbors));
 
         assertEquals(Cell.live(), nextGenerationCell);
     }
@@ -65,7 +64,7 @@ public class GameOfLifeTest {
                 Cell.live(), Cell.live(),
                 Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead()
         );
-        Cell nextGenerationCell = Cell.dead().nextGeneration(neighbors);
+        Cell nextGenerationCell = Cell.dead().nextGeneration(new Neighborhood(neighbors));
 
         assertEquals(Cell.dead(), nextGenerationCell);
     }
@@ -76,7 +75,7 @@ public class GameOfLifeTest {
                 Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(),
                 Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead()
         );
-        Cell nextGenerationCell = Cell.live().nextGeneration(neighbors);
+        Cell nextGenerationCell = Cell.live().nextGeneration(new Neighborhood(neighbors));
 
         assertEquals(Cell.dead(), nextGenerationCell);
     }
@@ -87,7 +86,7 @@ public class GameOfLifeTest {
                 Cell.live(),
                 Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead()
         );
-        Cell nextGenerationCell = Cell.live().nextGeneration(neighbors);
+        Cell nextGenerationCell = Cell.live().nextGeneration(new Neighborhood(neighbors));
 
         assertEquals(Cell.dead(), nextGenerationCell);
     }
@@ -98,7 +97,7 @@ public class GameOfLifeTest {
                 Cell.live(), Cell.live(), Cell.live(), Cell.live(),
                 Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead()
         );
-        Cell nextGenerationCell = Cell.live().nextGeneration(neighbors);
+        Cell nextGenerationCell = Cell.live().nextGeneration(new Neighborhood(neighbors));
 
         assertEquals(Cell.dead(), nextGenerationCell);
     }
@@ -109,7 +108,7 @@ public class GameOfLifeTest {
                 Cell.live(), Cell.live(),
                 Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead()
         );
-        Cell nextGenerationCell = Cell.live().nextGeneration(neighbors);
+        Cell nextGenerationCell = Cell.live().nextGeneration(new Neighborhood(neighbors));
 
         assertEquals(Cell.live(), nextGenerationCell);
     }
@@ -120,7 +119,7 @@ public class GameOfLifeTest {
                 Cell.live(), Cell.live(), Cell.live(),
                 Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead(), Cell.dead()
         );
-        Cell nextGenerationCell = Cell.live().nextGeneration(neighbors);
+        Cell nextGenerationCell = Cell.live().nextGeneration(new Neighborhood(neighbors));
 
         assertEquals(Cell.live(), nextGenerationCell);
     }
