@@ -15,7 +15,6 @@ import static org.junit.Assert.assertEquals;
     TODO:
 
     * verificare come questo modello di cella si aggancia ad un mondo fatto di tante celle a griglia
-    * rendere polimorfico il metodo `nextGeneration` (e' la cella stessa a determinare la cella alla generazione successiva)
     * provare a spostare DeadCell e LiveCell in un package "interno" (rendendo non public le due classi)
         e verificare se tutto compila ancora
     * introdurre un builder per creare i neighbors in modo "comodo"

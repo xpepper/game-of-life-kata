@@ -1,8 +1,11 @@
 public class DeadCell extends Cell {
 
     @Override
-    protected boolean isAliveInTheNextGeneration(Neighborhood neighborhood) {
-        return neighborhood.isFertile();
+    public Cell nextGeneration(Neighborhood neighborhood) {
+        if (neighborhood.isFertile()) {
+            return Cell.live();
+        } else {
+            return Cell.dead();
+        }
     }
-
 }

@@ -1,8 +1,11 @@
 public class LiveCell extends Cell {
 
     @Override
-    protected boolean isAliveInTheNextGeneration(Neighborhood neighborhood) {
-        return neighborhood.isStable();
+    public Cell nextGeneration(Neighborhood neighborhood) {
+        if (neighborhood.isStable()) {
+            return Cell.live();
+        } else {
+            return Cell.dead();
+        }
     }
-
 }

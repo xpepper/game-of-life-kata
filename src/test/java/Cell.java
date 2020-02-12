@@ -8,15 +8,7 @@ abstract class Cell {
         return new LiveCell();
     }
 
-    public Cell nextGeneration(Neighborhood neighborhood) {
-        if (isAliveInTheNextGeneration(neighborhood)) {
-            return Cell.live();
-        } else {
-            return Cell.dead();
-        }
-    }
-
-    protected abstract boolean isAliveInTheNextGeneration(Neighborhood neighborhood);
+    public abstract Cell nextGeneration(Neighborhood neighborhood);
 
     @Override
     public boolean equals(Object o) {
