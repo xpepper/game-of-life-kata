@@ -1,4 +1,7 @@
 import java.util.List;
+import java.util.function.Predicate;
+
+import static java.lang.Math.toIntExact;
 
 abstract class Cell {
 
@@ -20,11 +23,17 @@ abstract class Cell {
 
     protected abstract boolean isAliveInTheNextGeneration(List<Cell> neighbors);
 
-    protected abstract boolean isAlive();
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         return getClass() == o.getClass();
+    }
+
+    protected Integer liveCellsIn(List<Cell> neighbors) {
+        return toIntExact(neighbors.stream().filter(isAlive()).count());
+    }
+
+    private Predicate<Cell> isAlive() {
+        return cell -> cell instanceof LiveCell;
     }
 }
