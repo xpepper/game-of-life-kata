@@ -1,3 +1,4 @@
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import static org.junit.Assert.assertEquals;
     TODO:
 
     * verificare come questo modello di cella si aggancia ad un mondo fatto di tante celle a griglia
+        * proviamo a testare la transizione di stato per effetto collaterale su un collaboratore
     * provare a spostare DeadCell e LiveCell in un package "interno" (rendendo non public le due classi)
         e verificare se tutto compila ancora
     * introdurre un builder per creare i neighbors in modo "comodo"
@@ -31,9 +33,21 @@ import static org.junit.Assert.assertEquals;
 
     griglia 3x3
     sola cella viva al centro => vuota
+
+    griglia 3x3 (infinita...)
  */
 
 public class GameOfLifeTest {
+
+    public static final World AN_EMPTY_WORLD = new World();
+
+    @Test
+    public void a_world_with_a_single_alive_cell_will_evolve_to_an_empty_world() {
+        World world = new World();
+        world.addCell(Cell.live(), 1, 1);
+
+        assertEquals(AN_EMPTY_WORLD, world.evolve());
+    }
 
     @Test
     public void a_dead_cell_with_all_dead_neighbors_remains_dead() {
