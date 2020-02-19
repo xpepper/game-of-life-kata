@@ -19,6 +19,7 @@ import static org.junit.Assert.assertNotEquals;
     * valutare se il metodo add debba sempre aggiungere una cella viva, e quindi non servirebbe passarla come primo parametro
     * verificare come questo modello di cella si aggancia ad un mondo fatto di tante celle a griglia
         * proviamo a testare la transizione di stato per effetto collaterale su un collaboratore
+    * mondo toroidale infinito
     * provare a spostare DeadCell e LiveCell in un package "interno" (rendendo non public le due classi)
         e verificare se tutto compila ancora
     * introdurre un builder per creare i neighbors in modo "comodo"
@@ -78,12 +79,20 @@ public class GameOfLifeTest {
         assertEquals(anotherWorld, world);
     }
 
-    @Test @Ignore
-    public void a_world_with_a_single_alive_cell_will_evolve_to_an_empty_world() {
+    @Test
+    public void xxx() {
         World world = new World();
-        world.add(Cell.live(), new Location(1, 1));
+        world.add(Cell.live(), new Location(0,0));
+        world.add(Cell.live(), new Location(0,1));
+        world.add(Cell.live(), new Location(0,2));
 
-        assertEquals(AN_EMPTY_WORLD, world.evolve());
+        World newWorld = world.evolve();
+
+        World evolved = new World();
+        evolved.add(Cell.live(), new Location(0,1));
+        evolved.add(Cell.live(), new Location(1,1));
+
+        assertEquals(evolved, newWorld);
     }
 
     @Test
