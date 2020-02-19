@@ -1,24 +1,19 @@
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
 import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 
-public class World {
-    private final Map<Location, Cell> cells = new HashMap<>();
+public class Location {
+    private final int x;
+    private final int y;
 
-    public void add(Cell cell, Location location) {
-        cells.put(location, cell);
-    }
-
-    public World evolve() {
-        return new World();
+    public Location(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
     @Override
-    public boolean equals(Object other) {
-        return reflectionEquals(this, other);
+    public boolean equals(Object o) {
+        return reflectionEquals(this, o);
     }
 
     @Override

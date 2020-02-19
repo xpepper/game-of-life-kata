@@ -16,6 +16,7 @@ import static org.junit.Assert.assertNotEquals;
 
     TODO:
 
+    * valutare se il metodo add debba sempre aggiungere una cella viva, e quindi non servirebbe passarla come primo parametro
     * verificare come questo modello di cella si aggancia ad un mondo fatto di tante celle a griglia
         * proviamo a testare la transizione di stato per effetto collaterale su un collaboratore
     * provare a spostare DeadCell e LiveCell in un package "interno" (rendendo non public le due classi)
@@ -50,27 +51,37 @@ public class GameOfLifeTest {
     @Test
     public void a_world_with_one_alive_cell_is_not_empty() {
         World world = new World();
-        world.add(Cell.live());
+        world.add(Cell.live(), new Location(1, 1));
 
         assertNotEquals(AN_EMPTY_WORLD, world);
     }
 
-//    @Test
-//    public void xxx() {
-//        World world = new World();
-//        world.add(Cell.live(), 1, 1);
-//
-//        World anotherWorld = new World();
-//        world.add(Cell.live(), 0, 0);
-//
-//        assertNotEquals(anotherWorld, world);
-//    }
+    @Test
+    public void two_worlds_with_a_cell_in_a_different_location_are_not_equals() {
+        World world = new World();
+        world.add(Cell.live(), new Location(1, 1));
 
+        World anotherWorld = new World();
+        anotherWorld.add(Cell.live(), new Location(2, 2));
+
+        assertNotEquals(anotherWorld, world);
+    }
+
+    @Test
+    public void two_worlds_with_a_cell_in_the_same_location_are_equals() {
+        World world = new World();
+        world.add(Cell.live(), new Location(1, 1));
+
+        World anotherWorld = new World();
+        anotherWorld.add(Cell.live(), new Location(1, 1));
+
+        assertEquals(anotherWorld, world);
+    }
 
     @Test @Ignore
     public void a_world_with_a_single_alive_cell_will_evolve_to_an_empty_world() {
         World world = new World();
-        world.add(Cell.live());
+        world.add(Cell.live(), new Location(1, 1));
 
         assertEquals(AN_EMPTY_WORLD, world.evolve());
     }
