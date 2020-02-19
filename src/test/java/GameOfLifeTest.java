@@ -1,10 +1,11 @@
-import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 /*
     RULES:
@@ -42,9 +43,34 @@ public class GameOfLifeTest {
     public static final World AN_EMPTY_WORLD = new World();
 
     @Test
+    public void a_newly_created_world_is_empty() {
+        assertEquals(AN_EMPTY_WORLD, new World());
+    }
+
+    @Test
+    public void a_world_with_one_alive_cell_is_not_empty() {
+        World world = new World();
+        world.add(Cell.live());
+
+        assertNotEquals(AN_EMPTY_WORLD, world);
+    }
+
+//    @Test
+//    public void xxx() {
+//        World world = new World();
+//        world.add(Cell.live(), 1, 1);
+//
+//        World anotherWorld = new World();
+//        world.add(Cell.live(), 0, 0);
+//
+//        assertNotEquals(anotherWorld, world);
+//    }
+
+
+    @Test @Ignore
     public void a_world_with_a_single_alive_cell_will_evolve_to_an_empty_world() {
         World world = new World();
-        world.addCell(Cell.live(), 1, 1);
+        world.add(Cell.live());
 
         assertEquals(AN_EMPTY_WORLD, world.evolve());
     }
