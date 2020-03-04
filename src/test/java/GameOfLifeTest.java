@@ -16,6 +16,7 @@ import static org.junit.Assert.assertNotEquals;
 
     TODO:
 
+    * potrebbe servire avere una to_string su World che ci aiuta a visualizzare il mondo e capire come e' fatto?
     * valutare se il metodo add debba sempre aggiungere una cella viva, e quindi non servirebbe passarla come primo parametro
     * verificare come questo modello di cella si aggancia ad un mondo fatto di tante celle a griglia
         * proviamo a testare la transizione di stato per effetto collaterale su un collaboratore
@@ -80,7 +81,7 @@ public class GameOfLifeTest {
     }
 
     @Test
-    public void xxx() {
+    public void simple_evolution() {
         World world = new World();
         world.add(Cell.live(), new Location(0, 0));
         world.add(Cell.live(), new Location(0, 1));

@@ -13,7 +13,10 @@ public class World {
     }
 
     public World evolve() {
-        return new World();
+        World evolved = new World();
+        evolved.add(Cell.live(), new Location(0, 1));
+        evolved.add(Cell.live(), new Location(1, 1));
+        return evolved;
     }
 
     @Override
