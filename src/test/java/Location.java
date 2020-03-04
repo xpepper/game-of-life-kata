@@ -3,8 +3,8 @@ import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCod
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 
 public class Location {
-    private final int x;
-    private final int y;
+    public final int x;
+    public final int y;
 
     public Location(int x, int y) {
         this.x = x;

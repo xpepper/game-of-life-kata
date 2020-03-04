@@ -1,6 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
 
+import static java.util.Arrays.asList;
 import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
 import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
@@ -14,7 +15,18 @@ public class World {
 
     public World evolve() {
         World evolved = new World();
-        evolved.add(Cell.live(), new Location(0, 1));
+        Location location = new Location(0, 1);
+        Cell nextCell = Cell.live().nextGeneration(new Neighborhood(
+                asList(
+                        cells.getOrDefault(new Location(location.x, location.y-1), Cell.dead()),
+                        cells.getOrDefault(new Location(location.x, location.y+1), Cell.dead()),
+                        cells.getOrDefault(new Location(location.x+1, location.y-1), Cell.dead()),
+                        cells.getOrDefault(new Location(location.x+1, location.y), Cell.dead()),
+                        cells.getOrDefault(new Location(location.x+1, location.y+1), Cell.dead())
+                )
+        ));
+
+        evolved.add(nextCell, new Location(0, 1));
         evolved.add(Cell.live(), new Location(1, 1));
         return evolved;
     }
