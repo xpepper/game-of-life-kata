@@ -82,15 +82,15 @@ public class GameOfLifeTest {
     @Test
     public void xxx() {
         World world = new World();
-        world.add(Cell.live(), new Location(0,0));
-        world.add(Cell.live(), new Location(0,1));
-        world.add(Cell.live(), new Location(0,2));
+        world.add(Cell.live(), new Location(0, 0));
+        world.add(Cell.live(), new Location(0, 1));
+        world.add(Cell.live(), new Location(0, 2));
 
         World newWorld = world.evolve();
 
         World evolved = new World();
-        evolved.add(Cell.live(), new Location(0,1));
-        evolved.add(Cell.live(), new Location(1,1));
+        evolved.add(Cell.live(), new Location(0, 1));
+        evolved.add(Cell.live(), new Location(1, 1));
 
         assertEquals(evolved, newWorld);
     }
