@@ -1,6 +1,7 @@
 import java.util.List;
 
 import static java.lang.Math.toIntExact;
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 
 public class Neighborhood {
     private List<Cell> neighbors;
@@ -20,4 +21,10 @@ public class Neighborhood {
     protected Integer liveCells() {
         return toIntExact(neighbors.stream().filter(Cell::isAlive).count());
     }
+
+    @Override
+    public String toString() {
+        return reflectionToString(this);
+    }
+
 }

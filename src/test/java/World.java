@@ -15,20 +15,15 @@ public class World {
 
     public World evolve() {
         World evolved = new World();
-        Location location = new Location(0, 1);
 
-        Cell nextCell = Cell.live().nextGeneration(new Neighborhood(
-                asList(
-                        cells.getOrDefault(location.at(Location.WEST), Cell.dead()),
-                        cells.getOrDefault(location.at(Location.EAST), Cell.dead()),
-                        cells.getOrDefault(location.at(Location.SOUTH_WEST), Cell.dead()),
-                        cells.getOrDefault(location.at(Location.SOUTH), Cell.dead()),
-                        cells.getOrDefault(location.at(Location.SOUTH_EAST), Cell.dead())
-                )
-        ));
+        Location firstLocation = new Location(0, 1);
+        Cell nextCellAtFirstLocation = cells.getOrDefault(firstLocation, Cell.dead()).nextGeneration(neighborhoodOf(firstLocation));
 
-        evolved.add(nextCell, location);
-        evolved.add(Cell.live(), new Location(1, 1));
+        Location secondLocation = new Location(1, 1);
+        Cell nextCellAtSecondLocation = cells.getOrDefault(secondLocation, Cell.dead()).nextGeneration(neighborhoodOf(secondLocation));
+
+        evolved.add(nextCellAtFirstLocation, firstLocation);
+        evolved.add(nextCellAtSecondLocation, secondLocation);
         return evolved;
     }
 
@@ -45,5 +40,20 @@ public class World {
     @Override
     public String toString() {
         return reflectionToString(this);
+    }
+
+    private Neighborhood neighborhoodOf(Location location) {
+        return new Neighborhood(
+                asList(
+                        cells.getOrDefault(location.at(Location.NORTH_EAST), Cell.dead()),
+                        cells.getOrDefault(location.at(Location.NORTH), Cell.dead()),
+                        cells.getOrDefault(location.at(Location.NORTH_WEST), Cell.dead()),
+                        cells.getOrDefault(location.at(Location.WEST), Cell.dead()),
+                        cells.getOrDefault(location.at(Location.EAST), Cell.dead()),
+                        cells.getOrDefault(location.at(Location.SOUTH_WEST), Cell.dead()),
+                        cells.getOrDefault(location.at(Location.SOUTH), Cell.dead()),
+                        cells.getOrDefault(location.at(Location.SOUTH_EAST), Cell.dead())
+                )
+        );
     }
 }
