@@ -25,4 +25,8 @@ public class Location {
     public String toString() {
         return reflectionToString(this);
     }
+
+    Location add(Location otherLocation) {
+        return new Location(x + otherLocation.x, y + otherLocation.y);
+    }
 }

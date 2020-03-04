@@ -16,17 +16,24 @@ public class World {
     public World evolve() {
         World evolved = new World();
         Location location = new Location(0, 1);
+
+        Location lookAtLeft = new Location(0, -1);
+        Location lookAtRight = new Location(0, +1);
+        Location lookAtBottomLeft = new Location(+1, -1);
+        Location lookDown = new Location(+1, 0);
+        Location lookAtBottomRight = new Location(+1, +1);
+
         Cell nextCell = Cell.live().nextGeneration(new Neighborhood(
                 asList(
-                        cells.getOrDefault(new Location(location.x, location.y-1), Cell.dead()),
-                        cells.getOrDefault(new Location(location.x, location.y+1), Cell.dead()),
-                        cells.getOrDefault(new Location(location.x+1, location.y-1), Cell.dead()),
-                        cells.getOrDefault(new Location(location.x+1, location.y), Cell.dead()),
-                        cells.getOrDefault(new Location(location.x+1, location.y+1), Cell.dead())
+                        cells.getOrDefault(location.add(lookAtLeft), Cell.dead()),
+                        cells.getOrDefault(location.add(lookAtRight), Cell.dead()),
+                        cells.getOrDefault(location.add(lookAtBottomLeft), Cell.dead()),
+                        cells.getOrDefault(location.add(lookDown), Cell.dead()),
+                        cells.getOrDefault(location.add(lookAtBottomRight), Cell.dead())
                 )
         ));
 
-        evolved.add(nextCell, new Location(0, 1));
+        evolved.add(nextCell, location);
         evolved.add(Cell.live(), new Location(1, 1));
         return evolved;
     }
