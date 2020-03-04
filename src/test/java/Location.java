@@ -26,7 +26,7 @@ public class Location {
         return reflectionToString(this);
     }
 
-    Location add(Location otherLocation) {
+    Location at(Location otherLocation) {
         return new Location(x + otherLocation.x, y + otherLocation.y);
     }
 }

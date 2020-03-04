@@ -17,19 +17,19 @@ public class World {
         World evolved = new World();
         Location location = new Location(0, 1);
 
-        Location lookAtLeft = new Location(0, -1);
-        Location lookAtRight = new Location(0, +1);
-        Location lookAtBottomLeft = new Location(+1, -1);
-        Location lookDown = new Location(+1, 0);
-        Location lookAtBottomRight = new Location(+1, +1);
+        Location west = new Location(0, -1);
+        Location east = new Location(0, +1);
+        Location southWest = new Location(+1, -1);
+        Location south = new Location(+1, 0);
+        Location southEast = new Location(+1, +1);
 
         Cell nextCell = Cell.live().nextGeneration(new Neighborhood(
                 asList(
-                        cells.getOrDefault(location.add(lookAtLeft), Cell.dead()),
-                        cells.getOrDefault(location.add(lookAtRight), Cell.dead()),
-                        cells.getOrDefault(location.add(lookAtBottomLeft), Cell.dead()),
-                        cells.getOrDefault(location.add(lookDown), Cell.dead()),
-                        cells.getOrDefault(location.add(lookAtBottomRight), Cell.dead())
+                        cells.getOrDefault(location.at(west), Cell.dead()),
+                        cells.getOrDefault(location.at(east), Cell.dead()),
+                        cells.getOrDefault(location.at(southWest), Cell.dead()),
+                        cells.getOrDefault(location.at(south), Cell.dead()),
+                        cells.getOrDefault(location.at(southEast), Cell.dead())
                 )
         ));
 
