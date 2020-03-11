@@ -16,31 +16,19 @@ import static org.junit.Assert.assertNotEquals;
     TODO:
 
     * estrarre factory per creare mondo
-    * ~ forse ci conviene popolare il mondo con TUTTE le celle, anche quelle DEAD?
-    * potrebbe servire avere una to_string su World che ci aiuta a visualizzare il mondo e capire come e' fatto?
     * neighborhoodOf va bene su World o è da spostare altrove?
     * valutare se il metodo add debba sempre aggiungere una cella viva, e quindi non servirebbe passarla come primo parametro
     * verificare come questo modello di cella si aggancia ad un mondo fatto di tante celle a griglia
         * proviamo a testare la transizione di stato per effetto collaterale su un collaboratore
-    * mondo toroidale infinito
     * provare a spostare DeadCell e LiveCell in un package "interno" (rendendo non public le due classi)
         e verificare se tutto compila ancora
     * introdurre un builder per creare i neighbors in modo "comodo"
         * tipo `n.withAlive(3).andDead(5).build()`
         * rafforzare la regola di dominio che ogni cella ha esattamente 8 celle vicine.
+    * come testiamo l'evoluzione del mondo per diversi seed iniziali?
+    * come disaccoppiamo il world dalla sua rappresentazione grafica?
+    * cosa cambierebbe se volessimo avere un mondo toroidale infinito oltre a quello con i confini?
 
-    - griglia infinita
-    - evoluzione nello stesso momento
-    - qual'è il primo test?
-    - in che modo una cella "conosce" le altre sue vicine?
-
-    griglia 3x3
-    vuota => vuota
-
-    griglia 3x3
-    sola cella viva al centro => vuota
-
-    griglia 3x3 (infinita...)
  */
 
 public class GameOfLifeTest {
