@@ -16,9 +16,8 @@ import static org.junit.Assert.assertNotEquals;
     TODO:
 
     * estrarre factory per creare mondo
-    * forse ci conviene popolare il mondo con TUTTE le celle, anche quelle DEAD?
+    * ~ forse ci conviene popolare il mondo con TUTTE le celle, anche quelle DEAD?
     * potrebbe servire avere una to_string su World che ci aiuta a visualizzare il mondo e capire come e' fatto?
-    * esprimere in modo più conciso e di alto livello il concetto di farsi dare una cella ad una data location
     * neighborhoodOf va bene su World o è da spostare altrove?
     * valutare se il metodo add debba sempre aggiungere una cella viva, e quindi non servirebbe passarla come primo parametro
     * verificare come questo modello di cella si aggancia ad un mondo fatto di tante celle a griglia

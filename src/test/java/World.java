@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import static java.util.Arrays.asList;
 import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
@@ -25,8 +26,8 @@ public class World {
     public World evolve() {
         World evolved = new World();
 
-        for (Location location : cells.keySet()) {
-            Cell nextCell = cells.getOrDefault(location, Cell.dead()).nextGeneration(neighborhoodOf(location));
+        for (Location location : locations()) {
+            Cell nextCell = cellAt(location).nextGeneration(neighborhoodOf(location));
             evolved.add(nextCell, location);
         }
         return evolved;
@@ -47,6 +48,14 @@ public class World {
         return reflectionToString(this);
     }
 
+    private Cell cellAt(Location location) {
+        return cells.getOrDefault(location, Cell.dead());
+    }
+
+    private Set<Location> locations() {
+        return cells.keySet();
+    }
+
     private void initialize() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
@@ -58,14 +67,14 @@ public class World {
     private Neighborhood neighborhoodOf(Location location) {
         return new Neighborhood(
                 asList(
-                        cells.getOrDefault(location.at(Location.NORTH_EAST), Cell.dead()),
-                        cells.getOrDefault(location.at(Location.NORTH), Cell.dead()),
-                        cells.getOrDefault(location.at(Location.NORTH_WEST), Cell.dead()),
-                        cells.getOrDefault(location.at(Location.WEST), Cell.dead()),
-                        cells.getOrDefault(location.at(Location.EAST), Cell.dead()),
-                        cells.getOrDefault(location.at(Location.SOUTH_WEST), Cell.dead()),
-                        cells.getOrDefault(location.at(Location.SOUTH), Cell.dead()),
-                        cells.getOrDefault(location.at(Location.SOUTH_EAST), Cell.dead())
+                        cellAt(location.at(Location.NORTH_EAST)),
+                        cellAt(location.at(Location.NORTH)),
+                        cellAt(location.at(Location.NORTH_WEST)),
+                        cellAt(location.at(Location.WEST)),
+                        cellAt(location.at(Location.EAST)),
+                        cellAt(location.at(Location.SOUTH_WEST)),
+                        cellAt(location.at(Location.SOUTH)),
+                        cellAt(location.at(Location.SOUTH_EAST))
                 )
         );
     }
