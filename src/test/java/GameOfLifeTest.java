@@ -15,6 +15,7 @@ import static org.junit.Assert.assertNotEquals;
 
     TODO:
 
+    * estrarre factory per creare mondo
     * forse ci conviene popolare il mondo con TUTTE le celle, anche quelle DEAD?
     * potrebbe servire avere una to_string su World che ci aiuta a visualizzare il mondo e capire come e' fatto?
     * esprimere in modo più conciso e di alto livello il concetto di farsi dare una cella ad una data location

@@ -15,6 +15,7 @@ public class World {
     public World() {
         this.rows = 3;
         this.columns = 3;
+        initialize();
     }
 
     public void add(Cell cell, Location location) {
@@ -48,6 +49,14 @@ public class World {
     @Override
     public String toString() {
         return reflectionToString(this);
+    }
+
+    private void initialize() {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                add(Cell.dead(), new Location(i, j));
+            }
+        }
     }
 
     private Neighborhood neighborhoodOf(Location location) {
