@@ -25,14 +25,10 @@ public class World {
     public World evolve() {
         World evolved = new World();
 
-        Location firstLocation = new Location(0, 1);
-        Cell nextCellAtFirstLocation = cells.getOrDefault(firstLocation, Cell.dead()).nextGeneration(neighborhoodOf(firstLocation));
-
-        Location secondLocation = new Location(1, 1);
-        Cell nextCellAtSecondLocation = cells.getOrDefault(secondLocation, Cell.dead()).nextGeneration(neighborhoodOf(secondLocation));
-
-        evolved.add(nextCellAtFirstLocation, firstLocation);
-        evolved.add(nextCellAtSecondLocation, secondLocation);
+        for (Location location : cells.keySet()) {
+            Cell nextCell = cells.getOrDefault(location, Cell.dead()).nextGeneration(neighborhoodOf(location));
+            evolved.add(nextCell, location);
+        }
         return evolved;
     }
 
