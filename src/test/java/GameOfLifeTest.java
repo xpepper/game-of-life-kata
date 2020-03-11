@@ -45,27 +45,12 @@ import static org.junit.Assert.assertNotEquals;
 
 public class GameOfLifeTest {
 
-    public static final World AN_EMPTY_WORLD = new World();
-
-    @Test
-    public void a_newly_created_world_is_empty() {
-        assertEquals(AN_EMPTY_WORLD, new World());
-    }
-
-    @Test
-    public void a_world_with_one_alive_cell_is_not_empty() {
-        World world = new World();
-        world.add(Cell.live(), new Location(1, 1));
-
-        assertNotEquals(AN_EMPTY_WORLD, world);
-    }
-
     @Test
     public void two_worlds_with_a_cell_in_a_different_location_are_not_equals() {
-        World world = new World();
+        World world = aWorld();
         world.add(Cell.live(), new Location(1, 1));
 
-        World anotherWorld = new World();
+        World anotherWorld = aWorld();
         anotherWorld.add(Cell.live(), new Location(2, 2));
 
         assertNotEquals(anotherWorld, world);
@@ -73,10 +58,10 @@ public class GameOfLifeTest {
 
     @Test
     public void two_worlds_with_a_cell_in_the_same_location_are_equals() {
-        World world = new World();
+        World world = aWorld();
         world.add(Cell.live(), new Location(1, 1));
 
-        World anotherWorld = new World();
+        World anotherWorld = aWorld();
         anotherWorld.add(Cell.live(), new Location(1, 1));
 
         assertEquals(anotherWorld, world);
@@ -84,14 +69,14 @@ public class GameOfLifeTest {
 
     @Test
     public void simple_evolution() {
-        World world = new World();
+        World world = aWorld();
         world.add(Cell.live(), new Location(0, 0));
         world.add(Cell.live(), new Location(0, 1));
         world.add(Cell.live(), new Location(0, 2));
 
         World newWorld = world.evolve();
 
-        World evolved = new World();
+        World evolved = aWorld();
         evolved.add(Cell.live(), new Location(0, 1));
         evolved.add(Cell.live(), new Location(1, 1));
 
@@ -184,5 +169,9 @@ public class GameOfLifeTest {
         Cell nextGenerationCell = Cell.live().nextGeneration(new Neighborhood(neighbors));
 
         assertEquals(Cell.live(), nextGenerationCell);
+    }
+
+    private static World aWorld() {
+        return new World(3, 3);
     }
 }

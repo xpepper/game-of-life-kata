@@ -13,9 +13,9 @@ public class World {
     private final Integer rows;
     private final Integer columns;
 
-    public World() {
-        this.rows = 3;
-        this.columns = 3;
+    public World(Integer rows, Integer columns) {
+        this.rows = rows;
+        this.columns = columns;
         initialize();
     }
 
@@ -24,7 +24,7 @@ public class World {
     }
 
     public World evolve() {
-        World evolved = new World();
+        World evolved = new World(rows, columns);
 
         for (Location location : locations()) {
             Cell nextCell = cellAt(location).nextGeneration(neighborhoodOf(location));
