@@ -5,7 +5,6 @@ import java.util.Set;
 import static java.util.Arrays.asList;
 import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
 import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;
-import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
 
 public class World {
     private final Map<Location, Cell> cells = new HashMap<>();
@@ -45,7 +44,18 @@ public class World {
 
     @Override
     public String toString() {
-        return reflectionToString(this);
+        StringBuilder buffer = new StringBuilder();
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                Cell cell = cellAt(new Location(i, j));
+                if (cell.isAlive())
+                    buffer.append("|x");
+                else
+                    buffer.append("| ");
+            }
+            buffer.append("\n");
+        }
+        return buffer.toString();
     }
 
     private Cell cellAt(Location location) {
