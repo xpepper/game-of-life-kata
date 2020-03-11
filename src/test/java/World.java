@@ -9,6 +9,14 @@ import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToStrin
 public class World {
     private final Map<Location, Cell> cells = new HashMap<>();
 
+    private final Integer rows;
+    private final Integer columns;
+
+    public World() {
+        this.rows = 3;
+        this.columns = 3;
+    }
+
     public void add(Cell cell, Location location) {
         cells.put(location, cell);
     }
